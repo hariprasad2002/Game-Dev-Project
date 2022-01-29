@@ -98,7 +98,7 @@ public class MyBikeControll : MonoBehaviour
     public bool Backward = false;
     [HideInInspector]
     public float steer2;
-    private float accel = 0.0f; 
+    public float accel = 0.0f; 
     public float Z_Rotation = 5;
     private bool shifmotor;
     [HideInInspector]
@@ -120,7 +120,7 @@ public class MyBikeControll : MonoBehaviour
     public bool NeutralGear = true;
     [HideInInspector]
     public float motorRPM = 0.0f;
-    private float wantedRPM = 0.0f;
+    public float wantedRPM = 0.0f;
     private float w_rotate;
     private Rigidbody myRigidbody;
     private bool shifting;
