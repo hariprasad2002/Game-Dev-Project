@@ -6,6 +6,9 @@ public class MyBikeControll : MonoBehaviour
 {
     PlayerManager playerManager;
     PhotonView view;
+    public float bikespeed;
+    private float maxbikespeed=100;
+    private float maxmotortorque;
     void Start()
     {
         Camera[] cameras=GetComponentsInChildren<Camera>();
@@ -313,6 +316,12 @@ public class MyBikeControll : MonoBehaviour
     }
     void FixedUpdate()
     {
+        foreach (WheelComponent w in wheels)
+        {
+            WheelCollider col = w.collider;
+            maxmotortorque=col.motorTorque;
+        }
+        bikespeed= (myRigidbody.velocity.magnitude * 3.6f)/maxbikespeed;
         if(!finishrace.instance.gamestarted)
             return;
         if(finishrace.instance.gamecompleted)

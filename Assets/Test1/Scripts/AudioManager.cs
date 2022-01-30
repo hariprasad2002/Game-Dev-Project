@@ -1,18 +1,19 @@
-﻿using System.Collections;
+﻿//using System.Collections;
 //using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
 public class AudioManager : MonoBehaviour
 {
+    MyBikeControll mybike;
     [SerializeField]PhotonView view;
-    public AudioClip idle;
-    public AudioClip ride;
-    public AudioClip starting;
-    public AudioClip stoping;
+    private float bikepitch=1f;
+    private float minpitch=0.05f;
     private AudioSource source;
+    bool playing=false;
     void Start()
     {
+        mybike=GetComponent<MyBikeControll>();
         if(!view.IsMine)
         {
             Destroy(this.gameObject);
@@ -21,34 +22,15 @@ public class AudioManager : MonoBehaviour
     }
     void Update()
     {
-        float xdir=Input.GetAxis("Horizontal");
-        float ydir=Input.GetAxis("Vertical");
-        source.PlayOneShot(ride);
-        source.volume=0.5f;
-        StartCoroutine(wait(2.5f));
-        /*if(xdir==0 && ydir==0)
-        {
-            source.PlayOneShot(idle);
-            source.volume=0.4f;
-        }
-        else if(xdir>0.5 || ydir>0.5)
-        {
-            source.PlayOneShot(ride);
-            source.volume=0.7f;
-        }
-        else if(xdir<0.2 || ydir<0.2)
-        {
-            source.PlayOneShot(stoping);
-            source.volume=0.3f;
-        }
+        float vertical=Input.GetAxis("Vertical");
+        source.volume=vertical;
+        if(finishrace.instance.gamestarted && !playing)
+            playing=true;
+            source.Play();
+        /*bikepitch=mybike.bikespeed;
+        if(bikepitch < minpitch)
+            source.pitch=minpitch;
         else
-        {
-            source.PlayOneShot(starting);
-            source.volume=0.5f;
-        }*/
+            source.pitch=bikepitch;*/
     }
-    IEnumerator wait(float time)
-	{
-        yield return new WaitForSeconds(time);
-	}
 }
